@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/private/template/template.xhtml">
+        <ui:define name="conteudo">
+            <p:panel id="panel" header="Nova corrida" style="margin: 10px; color: black">
+                <div class="ui-g">
+                    <div class="ui-g-12" style="color: black">
+                        <label> Nome: </label>
+                        <p:inputText id="nome" value="#{corridaMB.corrida.nome}" style="width: 43%;" required="true" requiredMessage="Nome é obrigatório!"/>
+                        <label> País: </label>
+                        <p:inputText id="pais" value="#{corridaMB.corrida.paisOrigem}" style="width: 43%;" required="true" requiredMessage="País é obrigatório!"/>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-4">
+                        <label>Pilotos</label><br/>
+                        <p:selectOneMenu id="piloto" value="#{corridaMB.itemCorrida.piloto}" style="width: 95%"
+                                         converter="entityConverter">
+                            <f:selectItem itemLabel="--------Selecione--------" noSelectionOption="true"/>
+                            <f:selectItems value="#{pilotoMB.pilotos}" var="piloto"
+                                           itemLabel="#{piloto.nome}" itemValue="#{piloto}"/>
+                            <p:ajax event="change"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-2">
+                        <br/>
+                        <p:commandButton id="adicio" action="#{corridaMB.addPiloto()}" value="Adicionar" 
+                                          update="itensCorrida, piloto, growl"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:dataTable id="itensCorrida" value="#{corridaMB.itensCorrida}" var="item"
+                                     emptyMessage="Nenhum piloto">
+                            <p:column headerText="Piloto">
+                                #{item.piloto.nome}
+                            </p:column>
+                            <p:column headerText="Pontos" width="200" style="text-align: center;">
+                                <h:outputText value="#{item.piloto.pontos}">
+                                    <f:convertNumber minFractionDigits="2"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Excluir" width="80" style="text-align: center;">
+                                <p:commandButton id="excluir" action="#{corridaMB.removeCorrida(item)}" icon="ui-icon-trash"
+                                                 update="itensCorrida" immediate="true"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                <br/>
+                <div align="center">
+                    <p:commandButton id="salvar" action="#{corridaMB.alterar()}" value="Salvar" update="growl"/>
+                    <p:commandButton id="cancelar" action="#{corridaMB.cancelar()}" value="Cancelar" immediate="true"/>
+                </div>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
+

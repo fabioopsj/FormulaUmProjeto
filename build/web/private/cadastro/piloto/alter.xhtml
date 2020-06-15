@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/private/template/template.xhtml">
+        <ui:define name="conteudo">
+            <p:panel id="panel" header="Editar piloto" style="margin: 10px">
+                <div class="ui-g" style="color: black">
+                    <div class="ui-g-12" >
+                        <label> Nome: </label>
+                        <p:inputText id="nome"  style="width: 43%;" value="#{pilotoMB.piloto.nome}"
+                            required="true" requiredMessage="Nome é obrigatório!"/>
+                        <label> Pontos: </label>
+                        <p:inputText id="pontos"  style="width: 43%;" value="#{pilotoMB.piloto.pontos}"
+                            required="true" requiredMessage="Pontos é obrigatório!"/>   
+                       <br/>
+                    </div>
+                       <div class="ui-g-8">
+                           <label> Equipe: </label>
+                           <p:selectOneMenu id="equipe" value="#{pilotoMB.piloto.equipe}" style="width: 43%"
+                                            required="true" requiredMessage="Equipe é obrigatória"
+                                            converter="entityConverter">
+                               <f:selectItems value="#{equipeMB.equipes}" var="equipe"
+                                              itemLabel="#{equipe.nome}" itemValue="#{equipe}"/>
+                           </p:selectOneMenu>
+                       </div>
+                </div>        
+                <br/>
+                <div align="center">
+                    <p:commandButton id="alterar" action="#{pilotoMB.alterar()}" value="Alterar" update="growl"/>
+                    <p:commandButton id="cancelar" action="#{pilotoMB.cancelar()}" value="Cancelar" immediate="true"/>
+                </div>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+
+</html>
+

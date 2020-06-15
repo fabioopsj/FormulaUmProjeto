@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/private/template/template.xhtml">
+        <ui:define name="conteudo">
+            <f:event listener="#{funcionarioMB.listar()}" type="preRenderView" />
+            <p:panel id="panel" header="Funcionarios" style="margin: 10px">
+                <p:dataTable value="#{funcionarioMB.funcionarios}" var="funcionario" 
+                             emptyMessage="Nenhum funcionário" style="background-color: #363535">
+                    <p:column headerText="Nome" sortBy="#{funcionario.nome}">
+                        #{funcionario.nome}
+                    </p:column>
+                    <p:column headerText="Função">
+                        #{funcionario.cargo.funcao}
+                    </p:column>
+                    <p:column headerText="Equipe">
+                        #{funcionario.equipe.nome}
+                    </p:column>
+                    <p:column headerText="Editar" width="80">
+                        <div align="center">
+                            <p:commandButton action="#{funcionarioMB.buscaDados(funcionario)}" icon="ui-icon-pencil"/> 
+                        </div>
+                    </p:column>
+                    <p:column headerText="Excluir" width="80">
+                        <div align="center">
+                            <p:commandButton action="#{funcionarioMB.excluir(funcionario)}" icon="ui-icon-trash" 
+                                         onclick="if (!confirm('Confirma a exclusão?')) return false" 
+                                         update=":form:growl"/> 
+                        </div>
+                    </p:column>
+                </p:dataTable>
+                <br/>
+                <p:commandButton id="novo" action="#{funcionarioMB.novo()}" value="Novo"/>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
+

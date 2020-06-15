@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/private/template/template.xhtml">
+        <ui:define name="conteudo">
+            <f:event listener="#{pilotoMB.listar()}" type="preRenderView" />
+            <p:panel id="panel" header="Pilotos" style="margin: 10px">
+                <p:dataTable value="#{pilotoMB.pilotos}" var="piloto" emptyMessage="Nenhum piloto">
+                    <p:column id="nome" headerText="Nome">
+                        #{piloto.nome}
+                    </p:column>
+                    <p:column id="equipe" headerText="Equipe">
+                        #{piloto.equipe.nome}
+                    </p:column>
+                    <p:column id="pontos" headerText="Pontos" sortBy="#{piloto.pontos}" width="150" style="text-align: center">
+                        #{piloto.pontos}
+                    </p:column>         
+                    <p:column headerText="Editar" width="70" style="text-align: center">
+                        <p:commandButton action="#{pilotoMB.buscaDados(piloto)}" icon="ui-icon-pencil" /> 
+                    </p:column>
+                    <p:column headerText="Excluir" width="70" style="text-align: center">
+                        <p:commandButton action="#{pilotoMB.excluir(piloto)}" icon="ui-icon-trash" />
+                    </p:column>                            
+                </p:dataTable>
+                <br/>
+                <p:commandButton id="novo" action="#{pilotoMB.novo()}" value="Novo"/>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
+
